@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Numpu · The Reader's Viewpoint</title>
+  <meta name="description" content="A story with only one reader. The personal site of Numpu, a world builder.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hd/sword-1920.webp">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="is-locked">
+
+  <!-- Global layers -->
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="bars" aria-hidden="true"><i class="bar bar--t"></i><i class="bar bar--b"></i></div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+  <div class="cursor" aria-hidden="true"><i class="cursor__ring"></i><i class="cursor__dot"></i></div>
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+
+  <!-- HUD -->
+  <header class="hud" id="hud">
+    <a class="hud__mark" href="#hero" aria-label="Back to the prologue">
+      <svg viewBox="0 0 24 40" aria-hidden="true"><path d="M12 0v40M3 11h18" stroke="currentColor" stroke-width="1.6" fill="none"/><ellipse cx="12" cy="11" rx="9" ry="3.2" transform="rotate(-18 12 11)" stroke="currentColor" stroke-width=".8" fill="none"/></svg>
+      <span id="hudChapter">Prologue</span>
+    </a>
+    <div class="hud__right">
+      <span class="hud__coins" title="Your coins"><i class="coin" aria-hidden="true"></i><b id="coinCount">0</b> coins</span>
+      <button class="hud__sound" id="soundBtn" type="button" aria-pressed="false">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="hud__soundLabel">Sound off</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Gate: prologue + first system window -->
+  <div id="gate" class="gate">
+    <div class="prologue" id="prologue" aria-live="polite"></div>
+
+    <section class="sys sys--gate" id="gateWin" aria-labelledby="gateLead">
+      <header class="sys__head">System Message</header>
+      <p class="sys__lead" id="gateLead">A new reader has entered the scenario.</p>
+      <dl class="sys__list">
+        <div class="sys__row"><dt>Main Scenario #1</dt><dd>Reading</dd></div>
+        <div class="sys__row"><dt>Category</dt><dd>Main</dd></div>
+        <div class="sys__row"><dt>Difficulty</dt><dd>???</dd></div>
+        <div class="sys__row"><dt>Clear condition</dt><dd>Read this writer's story to the end</dd></div>
+        <div class="sys__row"><dt>Time limit</dt><dd>None</dd></div>
+        <div class="sys__row"><dt>Reward</dt><dd>One memory, 300 coins</dd></div>
+        <div class="sys__row"><dt>Penalty for failure</dt><dd class="is-danger">This story will never be read again</dd></div>
+      </dl>
+      <div class="sys__actions">
+        <button class="btn btn--primary" id="acceptSound" type="button">Accept with sound</button>
+        <button class="btn" id="acceptSilent" type="button">Accept in silence</button>
+      </div>
+    </section>
+
+    <button class="skip" id="skipIntro" type="button">Skip prologue</button>
+  </div>
+
+  <!-- Title card -->
+  <div id="titlecard" class="titlecard" aria-hidden="true">
+    <div class="tc__flash"></div>
+    <div class="tc__art">
+      <img src="assets/img/sword.jpg" data-hd="assets/img/hd/sword" alt="">
+      <svg class="tc__halo" viewBox="0 0 400 400">
+        <defs>
+          <linearGradient id="haloGrad" x1="0" x2="1">
+            <stop offset="0" stop-color="#F0D79A" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#F0D79A"/>
+            <stop offset="1" stop-color="#F0D79A" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g transform="rotate(-24 200 200)">
+          <ellipse class="halo halo--a" cx="200" cy="200" rx="168" ry="52"/>
+          <ellipse class="halo halo--b" cx="200" cy="200" rx="128" ry="36"/>
+          <circle class="halo__dot" r="3.2" cx="368" cy="200"/>
+        </g>
+      </svg>
+      <div class="tc__flare"></div>
+    </div>
+    <div class="tc__text">
+      <p class="tc__kicker">Omniscient Reader's Viewpoint</p>
+      <h2 class="tc__name" data-split-chars>NUMPU</h2>
+    </div>
+  </div>
+
+  <main id="story">
+
+    <!-- Hero: the fall -->
+    <section id="hero" class="hero" data-chapter="Prologue">
+      <div class="hero__stage">
+        <div class="scene">
+          <img src="assets/img/falling.jpg" data-hd="assets/img/hd/falling" data-eager alt="A young man in a long coat falls backward through space, phases of the moon arcing above him and columns of text behind">
+          <div class="scene__rays"></div>
+          <div class="scene__dim"></div>
+        </div>
+        <canvas class="dust" aria-hidden="true"></canvas>
+        <div class="led" aria-hidden="true">
+          <div class="led__track"><span>Next: Chapter 1, Origin</span><span>The scenario is about to begin</span><span>Please mind the gap between fiction and reality</span><span>Next: Chapter 1, Origin</span><span>The scenario is about to begin</span><span>Please mind the gap between fiction and reality</span></div>
+        </div>
+        <div class="hero__copy">
+          <p class="hero__kicker">A story with only one reader</p>
+          <h1 class="hero__name"><span class="hero__nameText" data-split-chars>Numpu</span><i class="sweep" aria-hidden="true"></i></h1>
+          <p class="hero__line">A world builder working in Blender, Roblox, Unity and After Effects.<br>Scroll to fall into the first chapter.</p>
+        </div>
+        <div class="hero__scroll" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+
+    <!-- Chapter card 1 -->
+    <section class="card" aria-label="Chapter 1, Origin">
+      <div class="card__inner">
+        <p class="card__num">Chapter 1</p>
+        <i class="card__rule"></i>
+        <h2 class="card__title" data-split-chars>Origin</h2>
+        <p class="card__line">Every world begins as a single image.</p>
+      </div>
+    </section>
+
+    <!-- Chapter 1: origin -->
+    <section id="origin" class="chapter origin" data-chapter="Chapter 1 Origin" data-reward="1">
+      <div class="clock" aria-hidden="true"><svg id="clock" viewBox="-520 -520 1040 1040"></svg></div>
+      <canvas class="confetti" aria-hidden="true"></canvas>
+      <div class="origin__grid">
+        <div class="novel">
+          <p class="reveal">I build worlds. Not the one we live in, but the kind other people can walk into and not want to leave.</p>
+          <p class="reveal">A subway station falling apart. A school where something walks the halls after the last bell. A floating market hiding a mystery under the water. Each one starts as a single image in my head, gets shaped in <em>Blender</em>, and comes alive in <em>Roblox</em> and <em>Unity</em>.</p>
+          <p class="reveal">Some of them become videos instead, cut in <em>After Effects</em> so every frame lands on the beat.</p>
+          <p class="reveal">If you are reading this sentence, this story now has one reader.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter card 2 -->
+    <section class="card" aria-label="Chapter 2, Status">
+      <div class="card__inner">
+        <p class="card__num">Chapter 2</p>
+        <i class="card__rule"></i>
+        <h2 class="card__title" data-split-chars>Status</h2>
+        <p class="card__line">The system has finished reading the writer.</p>
+      </div>
+    </section>
+
+    <!-- Chapter 2: status window -->
+    <section id="status" class="chapter status" data-chapter="Chapter 2 Status" data-reward="2">
+      <section class="sys sys--status" data-sys aria-label="Character information">
+        <header class="sys__head">Character Information</header>
+        <div class="status__grid">
+          <div class="status__col">
+            <dl class="sys__list">
+              <div class="sys__row"><dt>Name</dt><dd>Numpu</dd></div>
+              <div class="sys__row"><dt>Age</dt><dd>Hidden from the constellations</dd></div>
+              <div class="sys__row"><dt>Title</dt><dd>The world builder nobody asked for</dd></div>
+              <div class="sys__row"><dt>Sponsor</dt><dd>None yet (waiting for you)</dd></div>
+            </dl>
+
+            <h3 class="sys__sub">Overall stats</h3>
+            <ul class="stats">
+              <li class="sys__row stat"><span>Imagination</span><b data-count="96">0</b><i></i></li>
+              <li class="sys__row stat"><span>Curiosity</span><b data-count="92">0</b><i></i></li>
+              <li class="sys__row stat"><span>Bug tolerance</span><b data-count="74">0</b><i></i></li>
+              <li class="sys__row stat"><span>Courage to open old files</span><b data-count="68">0</b><i></i></li>
+              <li class="sys__row stat stat--low"><span>Hours of sleep</span><b data-count="12">0</b><i></i></li>
+            </ul>
+          </div>
+
+          <div class="status__col">
+            <h3 class="sys__sub">Exclusive skills</h3>
+            <ul class="skills">
+              <li class="sys__row skill"><span class="skill__name">World Sculptor</span><span class="skill__lv">Lv.7</span><span class="skill__desc">Blender: scenes, buildings, stations, and every object inside them.</span></li>
+              <li class="sys__row skill"><span class="skill__name">Scenario Scripter</span><span class="skill__lv">Lv.6</span><span class="skill__desc">Roblox Studio and Luau: making the world answer back.</span></li>
+              <li class="sys__row skill"><span class="skill__name">Keeper of Physics</span><span class="skill__lv">Lv.5</span><span class="skill__desc">Unity: fire and water have to work together to clear the stage.</span></li>
+              <li class="sys__row skill"><span class="skill__name">Conductor of Frames</span><span class="skill__lv">Lv.6</span><span class="skill__desc">After Effects: every cut on the beat, every move in rhythm.</span></li>
+              <li class="sys__row skill skill--hidden"><span class="skill__name">Teller of Horror</span><span class="skill__lv">Lv.??</span><span class="skill__desc">This information cannot be displayed right now.</span></li>
+            </ul>
+
+            <h3 class="sys__sub">Stigma</h3>
+            <p class="sys__row stigma"><b>Creator's Viewpoint</b>Sees the whole world before the first block is placed, but it takes many sleepless nights before that world agrees to exist.</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Chapter card 3 -->
+    <section class="card" aria-label="Chapter 3, Scenarios">
+      <div class="card__inner">
+        <p class="card__num">Chapter 3</p>
+        <i class="card__rule"></i>
+        <h2 class="card__title" data-split-chars>Scenarios</h2>
+        <p class="card__line">Every world is a scenario. Some of them are still running.</p>
+      </div>
+    </section>
+
+    <!-- Chapter 3: scenarios -->
+    <section id="scenarios" class="chapter scenarios" data-chapter="Chapter 3 Scenarios" data-reward="3">
+      <div class="sc__pin">
+        <div class="sc__track">
+          <div class="sc__head">
+            <p class="sc__count">6 scenarios on record</p>
+            <p class="sc__hint">Keep scrolling to open the next one. Four are still in progress, and one has not been unlocked yet.</p>
+          </div>
+
+          <article class="sys quest" data-sys>
+            <header class="sys__head">Main Scenario #2</header>
+            <div class="quest__top sys__row">
+              <h3 class="quest__name">The Floating Market Mystery</h3>
+              <span class="quest__rank" data-rank="A">A</span>
+            </div>
+            <p class="quest__tool sys__row">Roblox Studio and Luau</p>
+            <dl class="sys__list">
+              <div class="sys__row"><dt>Category</dt><dd>Main</dd></div>
+              <div class="sys__row"><dt>Clear condition</dt><dd>Build a detective game in a Thai floating market that players can walk from end to end</dd></div>
+              <div class="sys__row"><dt>Time limit</dt><dd>None</dd></div>
+              <div class="sys__row"><dt>Reward</dt><dd>Luau +1, a whole town running at once</dd></div>
+              <div class="sys__row"><dt>Penalty</dt><dd class="is-danger">The ghost of the market waits there forever</dd></div>
+            </dl>
+            <p class="quest__state sys__row is-live">In progress</p>
+          </article>
+
+          <article class="sys quest" data-sys>
+            <header class="sys__head">Main Scenario #3</header>
+            <div class="quest__top sys__row">
+              <h3 class="quest__name">MRT Underground</h3>
+              <span class="quest__rank" data-rank="S">S</span>
+            </div>
+            <p class="quest__tool sys__row">Blender, three chapters</p>
+            <dl class="sys__list">
+              <div class="sys__row"><dt>Category</dt><dd>Main</dd></div>
+              <div class="sys__row"><dt>Clear condition</dt><dd>Build the station, the ruined station, and the hollow city beyond the exit</dd></div>
+              <div class="sys__row"><dt>Time limit</dt><dd>Before the last train leaves</dd></div>
+              <div class="sys__row"><dt>Reward</dt><dd>A map nobody wants to explore alone</dd></div>
+              <div class="sys__row"><dt>Penalty</dt><dd class="is-danger">Stranded on the platform until morning</dd></div>
+            </dl>
+            <p class="quest__state sys__row is-live">In progress</p>
+          </article>
+
+          <article class="sys quest" data-sys>
+            <header class="sys__head">Sub Scenario</header>
+            <div class="quest__top sys__row">
+              <h3 class="quest__name">After School</h3>
+              <span class="quest__rank" data-rank="B">B</span>
+            </div>
+            <p class="quest__tool sys__row">Blender into Roblox</p>
+            <dl class="sys__list">
+              <div class="sys__row"><dt>Category</dt><dd>Sub</dd></div>
+              <div class="sys__row"><dt>Clear condition</dt><dd>Build a Thai school map and bring the girl at the end of the hallway into the game</dd></div>
+              <div class="sys__row"><dt>Time limit</dt><dd>Before the final bell</dd></div>
+              <div class="sys__row"><dt>Reward</dt><dd>A hallway everyone will remember</dd></div>
+              <div class="sys__row"><dt>Penalty</dt><dd class="is-danger">She turns around</dd></div>
+            </dl>
+            <p class="quest__state sys__row is-live">In progress</p>
+          </article>
+
+          <article class="sys quest" data-sys>
+            <header class="sys__head">Main Scenario #4</header>
+            <div class="quest__top sys__row">
+              <h3 class="quest__name">TwoSouls</h3>
+              <span class="quest__rank" data-rank="A">A</span>
+            </div>
+            <p class="quest__tool sys__row">Unity 6, 2D</p>
+            <dl class="sys__list">
+              <div class="sys__row"><dt>Category</dt><dd>Main</dd></div>
+              <div class="sys__row"><dt>Clear condition</dt><dd>Lead the fire soul and the water soul out of here together</dd></div>
+              <div class="sys__row"><dt>Time limit</dt><dd>Before the last light goes out</dd></div>
+              <div class="sys__row"><dt>Reward</dt><dd>A two-player puzzle game built on trust</dd></div>
+              <div class="sys__row"><dt>Penalty</dt><dd class="is-danger">One of the two must stay behind</dd></div>
+            </dl>
+            <p class="quest__state sys__row is-live">In progress</p>
+          </article>
+
+          <article class="sys quest" data-sys>
+            <header class="sys__head">Special Scenario</header>
+            <div class="quest__top sys__row">
+              <h3 class="quest__name">The Reader's Viewpoint</h3>
+              <span class="quest__rank" data-rank="A">A</span>
+            </div>
+            <p class="quest__tool sys__row">HTML, GSAP and Web Audio</p>
+            <dl class="sys__list">
+              <div class="sys__row"><dt>Category</dt><dd>Special</dd></div>
+              <div class="sys__row"><dt>Clear condition</dt><dd>Build a website that knows it is being read</dd></div>
+              <div class="sys__row"><dt>Time limit</dt><dd>One night</dd></div>
+              <div class="sys__row"><dt>Reward</dt><dd>You, reading this right now</dd></div>
+              <div class="sys__row"><dt>Penalty</dt><dd class="is-danger">The fourth wall breaks too early</dd></div>
+            </dl>
+            <p class="quest__state sys__row is-clear">Cleared</p>
+          </article>
+
+          <article class="sys quest quest--locked" data-sys>
+            <header class="sys__head">Hidden Scenario</header>
+            <div class="quest__top sys__row">
+              <h3 class="quest__name">???</h3>
+              <span class="quest__rank" data-rank="?">?</span>
+            </div>
+            <p class="quest__tool sys__row">Locked</p>
+            <dl class="sys__list">
+              <div class="sys__row"><dt>Unlock condition</dt><dd>The writer starts the next chapter</dd></div>
+              <div class="sys__row"><dt>Hint</dt><dd>It might be something you and I make together</dd></div>
+            </dl>
+            <p class="quest__state sys__row">Waiting to open</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter card 4 -->
+    <section class="card" aria-label="Chapter 4, Constellations">
+      <div class="card__inner">
+        <p class="card__num">Chapter 4</p>
+        <i class="card__rule"></i>
+        <h2 class="card__title" data-split-chars>Constellations</h2>
+        <p class="card__line">Someone is always watching the story.</p>
+      </div>
+    </section>
+
+    <!-- Chapter 4: constellations -->
+    <section id="constellations" class="chapter stars-sec" data-chapter="Chapter 4 Constellations" data-reward="4">
+      <div class="stars-sec__bg" aria-hidden="true"><img src="assets/img/library.jpg" data-hd="assets/img/hd/library" alt=""></div>
+      <p class="ch-sub">Pick one of them and hear what they think of this story.</p>
+
+      <div class="watchers">
+        <button class="watcher" type="button" style="--p:0% 0%" data-name="Queen of the Silent Night" data-msg="smiles at the writer's stubbornness.">
+          <span class="watcher__name">Queen of the Silent Night</span></button>
+        <button class="watcher" type="button" style="--p:50% 0%" data-name="The One Who Hides from the Truth" data-msg="is peeking through their fingers. They don't want to miss the next chapter.">
+          <span class="watcher__name">The One Who Hides from the Truth</span></button>
+        <button class="watcher" type="button" style="--p:100% 0%" data-name="Youth in the White Scarf" data-msg="laughs softly and says this world feels warm.">
+          <span class="watcher__name">Youth in the White Scarf</span></button>
+        <button class="watcher" type="button" style="--p:0% 100%" data-name="Watcher of the Afternoon Light" data-msg="has memorized your name.">
+          <span class="watcher__name">Watcher of the Afternoon Light</span></button>
+        <button class="watcher" type="button" style="--p:50% 100%" data-name="Swordsman of the Snowstorm" data-msg="says nothing, but has not looked away.">
+          <span class="watcher__name">Swordsman of the Snowstorm</span></button>
+        <button class="watcher" type="button" style="--p:100% 100%" data-name="The One Who Laughs in the Last Chapter" data-msg="loves this story and wants a sequel.">
+          <span class="watcher__name">The One Who Laughs in the Last Chapter</span></button>
+      </div>
+
+      <div class="sponsor">
+        <div class="sponsor__stat"><span>Your coins</span><b id="sponsorCoins">0</b></div>
+        <button class="btn btn--primary sponsor__btn" id="sponsorBtn" type="button"><i class="coin" aria-hidden="true"></i>Sponsor the writer (100 coins)</button>
+        <div class="sponsor__stat"><span>Writer has received</span><b id="sponsoredCount">0</b></div>
+      </div>
+    </section>
+
+    <!-- Chapter card 5 -->
+    <section class="card card--glitch" aria-label="Chapter 5, The Fourth Wall">
+      <div class="card__inner">
+        <p class="card__num">Chapter 5</p>
+        <i class="card__rule"></i>
+        <h2 class="card__title" data-split-chars>The Fourth Wall</h2>
+        <p class="card__line">This chapter knows you are here.</p>
+      </div>
+    </section>
+
+    <!-- Chapter 5: the fourth wall -->
+    <section id="wall" class="chapter wall" data-chapter="Chapter 5 The Fourth Wall" data-reward="5">
+      <div class="wall__pin">
+        <div class="wall__bg" aria-hidden="true"><img src="assets/img/mirror.jpg" data-hd="assets/img/hd/mirror" alt=""></div>
+        <svg class="crack" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M500 300 L430 210 L452 150 L380 40 L360 0"/>
+          <path d="M500 300 L610 250 L690 270 L820 160 L1000 120"/>
+          <path d="M500 300 L560 390 L540 470 L620 600"/>
+          <path d="M500 300 L380 350 L300 330 L170 420 L0 470"/>
+          <path d="M500 300 L470 380 L400 440 L380 600"/>
+          <path d="M500 300 L590 180 L640 60 L700 0"/>
+          <path d="M452 150 L520 120"/><path d="M690 270 L720 340"/><path d="M300 330 L260 260"/><path d="M540 470 L470 520"/>
+        </svg>
+        <div class="wall__lines">
+          <p class="wl">Wait.</p>
+          <p class="wl">You're still reading, aren't you?</p>
+          <p class="wl">I know. Every line in here was written for you.</p>
+          <p class="wl wl--sys">[ The fourth wall is trembling ]</p>
+          <p class="wl wl--final">The only reader of this story<br>is you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Epilogue card -->
+    <section class="card" aria-label="Epilogue">
+      <div class="card__inner">
+        <p class="card__num">Epilogue</p>
+        <i class="card__rule"></i>
+        <h2 class="card__title" data-split-chars>Contact</h2>
+        <p class="card__line">Every reader can become a sponsor.</p>
+      </div>
+    </section>
+
+    <!-- Epilogue -->
+    <section id="epilogue" class="chapter epilogue" data-chapter="Epilogue" data-reward="6">
+      <section class="sys sys--contact" data-sys aria-labelledby="contactLead">
+        <header class="sys__head">System Message</header>
+        <p class="sys__lead" id="contactLead">Would you like to become a sponsoring constellation of this writer?</p>
+        <ul class="channels">
+          <li class="sys__row"><a class="channel" href="https://www.instagram.com/3rd_1864/" target="_blank" rel="noopener"><span class="channel__k">Instagram</span><span class="channel__v">@3rd_1864</span><span class="channel__go">Open</span></a></li>
+          <li class="sys__row"><a class="channel" href="https://www.facebook.com/n6mpx" target="_blank" rel="noopener"><span class="channel__k">Facebook</span><span class="channel__v">n6mpx</span><span class="channel__go">Open</span></a></li>
+          <li class="sys__row"><a class="channel" href="https://www.tiktok.com/@pawanaroimak" target="_blank" rel="noopener"><span class="channel__k">TikTok</span><span class="channel__v">@pawanaroimak</span><span class="channel__go">Open</span></a></li>
+          <li class="sys__row"><a class="channel" href="https://www.roblox.com/users/5114259737/profile" target="_blank" rel="noopener"><span class="channel__k">Roblox</span><span class="channel__v">Creator profile</span><span class="channel__go">Open</span></a></li>
+          <li class="sys__row"><button class="channel" type="button" data-copy="aeoilkoptv" data-label="LINE ID"><span class="channel__k">LINE</span><span class="channel__v">aeoilkoptv</span><span class="channel__go">Copy</span></button></li>
+          <li class="sys__row"><button class="channel" type="button" data-copy="numpukub" data-label="WeChat ID"><span class="channel__k">WeChat</span><span class="channel__v">numpukub</span><span class="channel__go">Copy</span></button></li>
+        </ul>
+      </section>
+
+      <div class="ending">
+        <div class="book">
+          <div class="book__page book__page--l"></div>
+          <div class="book__page book__page--r"></div>
+          <div class="book__cover">
+            <svg viewBox="0 0 24 40" aria-hidden="true"><path d="M12 0v40M3 11h18" stroke="currentColor" stroke-width="1.2" fill="none"/><ellipse cx="12" cy="11" rx="9" ry="3.2" transform="rotate(-18 12 11)" stroke="currentColor" stroke-width=".6" fill="none"/></svg>
+            <p class="book__title">The story is not over</p>
+            <p class="book__sub">The writer is still working on the next chapter.</p>
+          </div>
+        </div>
+        <button class="btn" id="rereadBtn" type="button">Read again from the beginning</button>
+      </div>
+
+      <footer class="credit">All illustrations belong to their original artists, from Omniscient Reader's Viewpoint. Used with love on this personal site.</footer>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
